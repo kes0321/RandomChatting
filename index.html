@@ -1,14 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatting Website</title>
+    <style>
+        /* CSS styles for the chat interface can be added here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-messages {
+            padding: 10px;
+            overflow-y: auto;
+            height: 300px;
+        }
+        .message {
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            background-color: #e9e9e9;
+        }
+        .message.sender {
+            background-color: #d4edda;
+            align-self: flex-end;
+        }
+        .message.receiver {
+            background-color: #cce5ff;
+            align-self: flex-start;
+        }
+        .message-text {
+            font-size: 14px;
+        }
+        .message-time {
+            font-size: 12px;
+            color: #666;
+        }
+        .chat-input {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        .input-field {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .send-button {
+            padding: 8px 20px;
+            margin-left: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    HELLO WORLD1!
+    <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+            <!-- Chat messages will be dynamically added here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" class="input-field" id="message-input" placeholder="Type your message...">
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            // JavaScript function to handle sending messages
+            var messageInput = document.getElementById("message-input");
+            var message = messageInput.value.trim();
+            if (message !== "") {
+                // Here you can implement the logic to send the message to the server or update the UI
+                displayMessage(message, "sender");
+                messageInput.value = "";
+            }
+        }
+
+        function displayMessage(message, type) {
+            // JavaScript function to display messages in the chat container
+            var chatMessages = document.getElementById("chat-messages");
+            var messageElement = document.createElement("div");
+            messageElement.classList.add("message", type);
+            messageElement.innerHTML = `
+                <p class="message-text">${message}</p>
+                <p class="message-time">${getTime()}</p>
+            `;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getTime() {
+            // JavaScript function to get current time in HH:MM format
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, "0");
+            var minutes = now.getMinutes().toString().padStart(2, "0");
+            return `${hours}:${minutes}`;
+        }
+    </script>
 </body>
 </html>
