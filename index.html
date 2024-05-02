@@ -85,8 +85,32 @@
             // JavaScript function to handle sending messages
             var messageInput = document.getElementById("message-input");
             var message = messageInput.value.trim();
+
+            
             if (message !== "") {
                 // Here you can implement the logic to send the message to the server or update the UI
+                const data = {
+                    message: message,
+                };
+                fetch('http://127.0.0.1:8000/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('네트워크 응답이 실패했습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('성공:', data);
+                })
+                .catch(error => {
+                    console.error('에러:', error);
+                });
                 displayMessage(message, "sender");
                 messageInput.value = "";
             }
